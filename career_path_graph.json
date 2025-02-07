@@ -1,4 +1,5 @@
-{"query": "CREATE 
+{
+  "query": "CREATE 
     (se:Career {name: 'Software Engineer'}),
     (ds:Career {name: 'Data Scientist'}),
     (fe:Career {name: 'Frontend Developer'}),
@@ -44,7 +45,7 @@
 
     (python)-[:CAN_BE_LEARNED_FROM]->(cs101),
     (mlskill)-[:CAN_BE_LEARNED_FROM]->(mlcourse),
-    (webdev)-[:CAN_BE_LEARNED_FROM]->(webdev),
+    (js)-[:CAN_BE_LEARNED_FROM]->(webdev),
     (sql)-[:CAN_BE_LEARNED_FROM]->(dbms),
     (cloud)-[:CAN_BE_LEARNED_FROM]->(cloudcert),
 
