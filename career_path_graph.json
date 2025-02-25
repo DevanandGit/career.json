@@ -1,42 +1,44 @@
 {
-  "query": "MERGE (q1:Qualification {name:\"PCMC\"}) \
-MERGE (q2:Qualification {name:\"PCMB\"}) \
-MERGE (q3:Qualification {name:\"Biopsychology\"}) \
-MERGE (q4:Qualification {name:\"Humanities\"}) \
-MERGE (q5:Qualification {name:\"Commerce\"}) \
-MERGE (i1:Interest {name:\"Coding\"}) \
-MERGE (i2:Interest {name:\"Business\"}) \
-MERGE (i3:Interest {name:\"Law\"}) \
-MERGE (i4:Interest {name:\"Medicine\"}) \
-MERGE (i5:Interest {name:\"Social Service\"}) \
-MERGE (c1:Course {name:\"B.Tech Computer Science\"}) \
-MERGE (c2:Course {name:\"BBA\"}) \
-MERGE (c3:Course {name:\"LLB\"}) \
-MERGE (c4:Course {name:\"MBBS\"}) \
-MERGE (c5:Course {name:\"BA Sociology\"}) \
-MERGE (q1)-[:RELATES_TO {score:5}]->(i1) \
-MERGE (q1)-[:RELATES_TO {score:3}]->(i2) \
-MERGE (q2)-[:RELATES_TO {score:4}]->(i4) \
-MERGE (q3)-[:RELATES_TO {score:4}]->(i5) \
-MERGE (q4)-[:RELATES_TO {score:5}]->(i3) \
-MERGE (q5)-[:RELATES_TO {score:5}]->(i2) \
-MERGE (i1)-[:LEADS_TO]->(c1) \
-MERGE (i2)-[:LEADS_TO]->(c2) \
-MERGE (i3)-[:LEADS_TO]->(c3) \
-MERGE (i4)-[:LEADS_TO]->(c4) \
-MERGE (i5)-[:LEADS_TO]->(c5) \
-MERGE (u:User {name:\"Student1\"}) \
-MERGE (u)-[:HAS_INTEREST {score:4}]->(i1) \
-MERGE (u)-[:HAS_INTEREST {score:2}]->(i2) \
-MATCH (u:User)-[ui:HAS_INTEREST]->(i:Interest) \
-MATCH (q:Qualification)-[qi:RELATES_TO]->(i) \
-MATCH (i)-[:LEADS_TO]->(c:Course) \
-WHERE u.name=\"Student1\" \
-RETURN c.name AS SuggestedCourse, \
-       q.name AS Qualification, \
-       i.name AS Interest, \
-       ui.score AS InterestScore, \
-       qi.score AS QualificationInterestScore \
-ORDER BY (ui.score * qi.score) DESC \
-LIMIT 3;"
+  "query": "MERGE (q1:Qualification {name:"PCMC"})
+MERGE (q2:Qualification {name:"PCMB"})
+MERGE (q3:Qualification {name:"Biopsychology"})
+MERGE (q4:Qualification {name:"Humanities"})
+MERGE (q5:Qualification {name:"Commerce"})
+MERGE (i1:Interest {name:"Coding"})
+MERGE (i2:Interest {name:"Business"})
+MERGE (i3:Interest {name:"Law"})
+MERGE (i4:Interest {name:"Medicine"})
+MERGE (i5:Interest {name:"Social Service"})
+MERGE (c1:Course {name:"B.Tech Computer Science"})
+MERGE (c2:Course {name:"BBA"})
+MERGE (c3:Course {name:"LLB"})
+MERGE (c4:Course {name:"MBBS"})
+MERGE (c5:Course {name:"BA Sociology"})
+MERGE (q1)-[:RELATES_TO {score:5}]->(i1)
+MERGE (q1)-[:RELATES_TO {score:3}]->(i2)
+MERGE (q2)-[:RELATES_TO {score:4}]->(i4)
+MERGE (q3)-[:RELATES_TO {score:4}]->(i5)
+MERGE (q4)-[:RELATES_TO {score:5}]->(i3)
+MERGE (q5)-[:RELATES_TO {score:5}]->(i2)
+MERGE (i1)-[:LEADS_TO]->(c1)
+MERGE (i2)-[:LEADS_TO]->(c2)
+MERGE (i3)-[:LEADS_TO]->(c3)
+MERGE (i4)-[:LEADS_TO]->(c4)
+MERGE (i5)-[:LEADS_TO]->(c5)
+MERGE (u:User {name:"Student1"})
+MERGE (u)-[:HAS_INTEREST {score:4}]->(i1)
+MERGE (u)-[:HAS_INTEREST {score:2}]->(i2)
+WITH u  # Add this WITH clause to separate MERGE and MATCH
+MATCH (u)-[ui:HAS_INTEREST]->(i:Interest)
+MATCH (q:Qualification)-[qi:RELATES_TO]->(i)
+MATCH (i)-[:LEADS_TO]->(c:Course)
+WHERE u.name="Student1"
+RETURN c.name AS SuggestedCourse, 
+       q.name AS Qualification, 
+       i.name AS Interest, 
+       ui.score AS InterestScore, 
+       qi.score AS QualificationInterestScore
+ORDER BY (ui.score * qi.score) DESC
+LIMIT 3;
+"
 }
